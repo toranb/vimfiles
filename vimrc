@@ -7,31 +7,23 @@
 ""
 
 set nocompatible
+syntax enable
 set encoding=utf-8
 
 call pathogen#infect()
 filetype plugin indent on
+runtime macros/matchit.vim
 
-runtime macros/matchit.vim  " enables % to cycle through `if/else/endif`
-
-syntax enable
-if has('gui_running')
-  set background=light
-else
-  set background=dark
-endif
-let g:solarized_termcolors=256
-colorscheme solarized
-
-set nonumber    " line numbers aren't needed
+set background=dark
+color torte
+set nonumber
 set ruler       " show the cursor position all the time
-set cursorline  " highlight the line of the cursor
-set showcmd     " show partial commands below the status line
+set cursorline
+set showcmd     " display incomplete commands
 set shell=bash  " avoids munging PATH under zsh
 let g:is_bash=1 " default shell syntax
 set history=200 " remember more Ex commands
-set scrolloff=3 " have some context around the current line always on screen
-
+set completeopt=menu
 " Allow backgrounding buffers without writing them, and remember marks/undo
 " for backgrounded buffers
 set hidden
@@ -57,33 +49,30 @@ set incsearch                     " incremental searching
 set ignorecase                    " searches are case insensitive...
 set smartcase                     " ... unless they contain at least one capital letter
 
-function s:setupWrapping()
-  set wrap
-  set wrapmargin=2
-  set textwidth=80
-endfunction
+set tags=~/.ctags
 
 if has("autocmd")
+  " Python auto complete
+  autocmd FileType python set omnifunc=pythoncomplete#Complete
+
+  " JavaScript auto complete
+  autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+
   " In Makefiles, use real tabs, not tabs expanded to spaces
   au FileType make set noexpandtab
-
-  " Make sure all markdown files have the correct filetype set and setup wrapping
-  au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown | call s:setupWrapping()
 
   " Treat JSON files like JavaScript
   au BufNewFile,BufRead *.json set ft=javascript
 
   " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
-  au FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
-
-  " Remember last location in file, but not for commit messages.
-  " see :help last-position-jump
-  au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g`\"" | endif
+  au FileType python set softtabstop=4 tabstop=4 shiftwidth=4
 
   " mark Jekyll YAML frontmatter as comment
   au BufNewFile,BufRead *.{md,markdown,html,xml} sy match Comment /\%^---\_.\{-}---$/
 endif
+
+" provide some context when editing
+set scrolloff=3
 
 " don't use Ex mode, use Q for formatting
 map Q gq
@@ -92,31 +81,18 @@ map Q gq
 :nnoremap <CR> :nohlsearch<cr>
 
 let mapleader=","
-
-" paste lines from unnamed register and fix indentation
-nmap <leader>p pV`]=
-nmap <leader>P PV`]=
-
-map <leader>gv :CommandTFlush<cr>\|:CommandT app/views<cr>
-map <leader>gc :CommandTFlush<cr>\|:CommandT app/controllers<cr>
-map <leader>gm :CommandTFlush<cr>\|:CommandT app/models<cr>
-map <leader>gh :CommandTFlush<cr>\|:CommandT app/helpers<cr>
-map <leader>gl :CommandTFlush<cr>\|:CommandT lib<cr>
-map <leader>gf :CommandTFlush<cr>\|:CommandT features<cr>
-map <leader>gg :topleft 100 :split Gemfile<cr>
+nnoremap <leader>tm :QTPY method verbose<CR>
+nnoremap <leader>tc :QTPY class verbose<CR>
+nnoremap <leader>s :QTPY session<CR>
+nnoremap <leader>j :RopeGotoDefinition<CR>
+nnoremap <leader>a :Ack!<space>
+map <leader>ri :silent! !etags -Rf ~/.ctags<cr><C-z><cr>
+map <leader>d :NERDTreeToggle<cr>
 map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
-" http://vimcasts.org/e/14
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
+map <leader>wo :VirtualEnvActivate vector<cr>
 map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
-
-let g:CommandTMaxHeight=10
-let g:CommandTMinHeight=4
-
-" ignore Rubinius, Sass cache files
-set wildignore+=tmp/**,*.rbc,.rbx,*.scssc,*.sassc
-
 nnoremap <leader><leader> <c-^>
-
 " find merge conflict markers
 nmap <silent> <leader>cf <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 
@@ -152,3 +128,66 @@ if has("statusline") && !&cp
   set statusline+=Buf:#%n
   set statusline+=[%b][0x%B]
 endif
+
+let g:CommandTMaxHeight=10
+let g:CommandTMinHeight=4
+let g:fuf_file_exclude = '\.pyc$'
+let NERDTreeIgnore = ['\.pyc$']
+
+" Rope AutoComplete
+let ropevim_vim_completion = 1
+let ropevim_extended_complete = 1
+let g:ropevim_autoimport_modules = ["os.*","traceback","django.*","xml.etree"]
+imap <c-space> <C-R>=RopeCodeAssistInsertMode()<CR>
+let g:SuperTabDefaultCompletionType = RopeCodeAssistInsertMode()<CR>
+
+function! GetSelectedText(...) 
+  try
+    let a_save = @a
+    if a:0 >= 1 && a:1 == 1
+      normal! gv"ad
+    else
+      normal! gv"ay
+    endif
+    return @a
+  finally
+    let @a = a_save
+  endtry
+endfunction
+
+function! RenameVariable()
+    let new_name = input("New variable name: ")
+    let old_name = GetSelectedText()
+    if new_name != '' && new_name != old_name
+        exec ':%s /' . old_name . '/' . new_name . '/gc'
+        redraw!
+    endif
+endfunction
+map <leader>rv :call RenameVariable()<cr>
+
+function! RenameFile()
+    let old_name = expand('%')
+    let new_name = input('New file name: ', expand('%'), 'file')
+    if new_name != '' && new_name != old_name
+        exec ':saveas ' . new_name
+        exec ':silent !rm ' . old_name
+        redraw!
+    endif
+endfunction
+map <leader>rf :call RenameFile()<cr>
+
+function! ExtractVariable()
+    let name = input("Variable name: ")
+    if name == ''
+        return
+    endif
+    normal! gv
+
+    " Replace selected text with the variable name
+    exec "normal c" . name
+    " Define the variable on the line above
+    exec "normal! O" . name . " = "
+    " Paste the original selected text to be the variable value
+    normal! $p
+endfunction
+vnoremap <leader>ev :call ExtractVariable()<cr>
