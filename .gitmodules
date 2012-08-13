@@ -16,9 +16,6 @@
 [submodule "bundle/rope"]
 	path = bundle/rope
 	url = https://github.com/klen/rope-vim.git
-[submodule "bundle/simplepair"]
-	path = bundle/simplepair
-	url = https://github.com/vim-scripts/simple-pairs.git
 [submodule "bundle/syntastic"]
 	path = bundle/syntastic
 	url = https://github.com/scrooloose/syntastic.git
