@@ -106,6 +106,10 @@ nnoremap <c-l> <c-w>l
 set backupdir=~/.vim/_backup    " where to put backup files.
 set directory=~/.vim/_temp      " where to put swap files.
 
+" decided not to use the default recovery
+set nobackup
+set noswapfile
+
 if has("statusline") && !&cp
   set laststatus=2  " always show the status bar
 
@@ -127,8 +131,8 @@ let g:CommandTMaxHeight=12
 let g:CommandTMinHeight=4
 
 " fuzzy finder and nerd tree should ignore pyc files
-let g:fuf_file_exclude = ['\.pyc$']
 let NERDTreeIgnore = ['\.pyc$']
+set wildignore=*.swp,*.bak,*.pyc,*.class
 
 " Rope AutoComplete
 let ropevim_vim_completion = 1
@@ -141,7 +145,7 @@ set pastetoggle=<F3>
 " ,v Select just pasted text.
 nnoremap <leader>v V`]
 
-" ,ev Shortcut to edit .vimrc file on the fly on a vertical window
+" ,ed Shortcut to edit .vimrc file on the fly on a vertical window
 nnoremap <leader>ed <C-w><C-v><C-l>:e $MYVIMRC<cr>
 
 " jj For Qicker Escaping between normal and editing mode
