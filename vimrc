@@ -1,11 +1,3 @@
-""
-"" Thanks:
-""   Gary Bernhardt  <destroyallsoftware.com>
-""   Drew Neil  <vimcasts.org>
-""   Tim Pope  <tbaggery.com>
-""   Janus  <github.com/carlhuda/janus>
-""
-
 set nocompatible
 syntax enable
 set encoding=utf-8
@@ -16,6 +8,7 @@ runtime macros/matchit.vim
 
 set background=dark
 color torte
+set lazyredraw
 set nonumber
 set ruler       " show the cursor position all the time
 set cursorline
@@ -24,8 +17,6 @@ set shell=bash  " avoids munging PATH under zsh
 let g:is_bash=1 " default shell syntax
 set history=200 " remember more Ex commands
 set completeopt=menu
-" Allow backgrounding buffers without writing them, and remember marks/undo
-" for backgrounded buffers
 set hidden
 
 "" Whitespace
@@ -35,6 +26,7 @@ set shiftwidth=2                  " an autoindent (with <<) is two spaces
 set expandtab                     " use spaces, not tabs
 set list                          " Show invisible characters
 set backspace=indent,eol,start    " backspace through everything in insert mode
+
 " List chars
 set listchars=""                  " Reset the listchars
 set listchars=tab:\ \             " a tab should display as "  ", trailing whitespace as "."
@@ -49,8 +41,6 @@ set incsearch                     " incremental searching
 set ignorecase                    " searches are case insensitive...
 set smartcase                     " ... unless they contain at least one capital letter
 
-set tags=~/.ctags
-
 if has("autocmd")
   " Python auto complete
   autocmd FileType python set omnifunc=pythoncomplete#Complete
@@ -58,18 +48,18 @@ if has("autocmd")
   " JavaScript auto complete
   autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 
-  " In Makefiles, use real tabs, not tabs expanded to spaces
-  au FileType make set noexpandtab
-
   " Treat JSON files like JavaScript
   au BufNewFile,BufRead *.json set ft=javascript
 
-  " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
+  " make Python follow PEP8
   au FileType python set softtabstop=4 tabstop=4 shiftwidth=4
 
   " mark Jekyll YAML frontmatter as comment
   au BufNewFile,BufRead *.{md,markdown,html,xml} sy match Comment /\%^---\_.\{-}---$/
 endif
+
+" etags support
+set tags=~/.ctags
 
 " provide some context when editing
 set scrolloff=3
@@ -80,19 +70,28 @@ map Q gq
 " clear the search buffer when hitting return
 :nnoremap <CR> :nohlsearch<cr>
 
+" basic list of shortcuts for the power user in all of us
 let mapleader=","
-nnoremap <leader>tm :QTPY method verbose<CR>
-nnoremap <leader>tc :QTPY class verbose<CR>
-nnoremap <leader>s :QTPY session<CR>
-nnoremap <leader>j :RopeGotoDefinition<CR>
-nnoremap <leader>a :Ack!<space>
-map <leader>ri :silent! !etags -Rf ~/.ctags<cr><C-z><cr>
+map <leader>a :Ack!<space>
 map <leader>d :NERDTreeToggle<cr>
+map <leader>s :QTPY session<cr>
+map <leader>tf :QTPY file verbose<cr>
+map <leader>tc :QTPY class verbose<cr>
+map <leader>tm :QTPY method verbose<cr>
+map <leader>j :RopeGotoDefinition<cr>
 map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
-cnoremap %% <C-R>=expand('%:h').'/'<cr>
-map <leader>wo :VirtualEnvActivate vector<cr>
 map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
+map .. :w<cr>
 nnoremap <leader><leader> <c-^>
+
+" basic refactoring support
+map <leader>rv :call RenameVariable()<cr>
+map <leader>ev :call ExtractVariable()<cr>
+map <leader>rf :call RenameFile()<cr>
+
+" re-index the etags file
+map <leader>ri :silent! !etags -Rf ~/.ctags<cr><C-z><cr>
+
 " find merge conflict markers
 nmap <silent> <leader>cf <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 
@@ -103,12 +102,6 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
-
-" disable cursor keys in normal mode
-map <Left>  :echo "no!"<cr>
-map <Right> :echo "no!"<cr>
-map <Up>    :echo "no!"<cr>
-map <Down>  :echo "no!"<cr>
 
 set backupdir=~/.vim/_backup    " where to put backup files.
 set directory=~/.vim/_temp      " where to put swap files.
@@ -129,18 +122,41 @@ if has("statusline") && !&cp
   set statusline+=[%b][0x%B]
 endif
 
-let g:CommandTMaxHeight=10
+" fuzzy finder height settings
+let g:CommandTMaxHeight=12
 let g:CommandTMinHeight=4
-let g:fuf_file_exclude = '\.pyc$'
+
+" fuzzy finder and nerd tree should ignore pyc files
+let g:fuf_file_exclude = ['\.pyc$']
 let NERDTreeIgnore = ['\.pyc$']
 
 " Rope AutoComplete
 let ropevim_vim_completion = 1
 let ropevim_extended_complete = 1
 let g:ropevim_autoimport_modules = ["os.*","traceback","django.*","xml.etree"]
-imap <c-space> <C-R>=RopeCodeAssistInsertMode()<CR>
-let g:SuperTabDefaultCompletionType = RopeCodeAssistInsertMode()<CR>
 
+" Make pasting done without any indentation break
+set pastetoggle=<F3>
+
+" ,v Select just pasted text.
+nnoremap <leader>v V`]
+
+" ,ev Shortcut to edit .vimrc file on the fly on a vertical window
+nnoremap <leader>ed <C-w><C-v><C-l>:e $MYVIMRC<cr>
+
+" jj For Qicker Escaping between normal and editing mode
+inoremap jj <ESC>
+
+" Make Sure that Vim returns to the same line when we reopen a file"
+augroup line_return
+    au!
+    au BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \ execute 'normal! g`"zvzz' |
+        \ endif
+augroup END
+
+" A few basic refactor methods below
 function! GetSelectedText(...) 
   try
     let a_save = @a
@@ -163,7 +179,6 @@ function! RenameVariable()
         redraw!
     endif
 endfunction
-map <leader>rv :call RenameVariable()<cr>
 
 function! RenameFile()
     let old_name = expand('%')
@@ -174,7 +189,6 @@ function! RenameFile()
         redraw!
     endif
 endfunction
-map <leader>rf :call RenameFile()<cr>
 
 function! ExtractVariable()
     let name = input("Variable name: ")
@@ -190,4 +204,3 @@ function! ExtractVariable()
     " Paste the original selected text to be the variable value
     normal! $p
 endfunction
-vnoremap <leader>ev :call ExtractVariable()<cr>
