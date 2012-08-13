@@ -86,7 +86,10 @@ nnoremap <leader><leader> <c-^>
 
 " basic refactoring support
 map <leader>rv :call RenameVariable()<cr>
-map <leader>ev :call ExtractVariable()<cr>
+map <leader>ev :RopeExtractVariable<cr>
+map <leader>em :RopeExtractMethod<cr>
+map <leader>im :RopeAutoImport<cr>
+map <leader>fu :RopeFindOccurrences<cr>
 map <leader>rf :call RenameFile()<cr>
 
 " re-index the etags file
@@ -192,19 +195,4 @@ function! RenameFile()
         exec ':silent !rm ' . old_name
         redraw!
     endif
-endfunction
-
-function! ExtractVariable()
-    let name = input("Variable name: ")
-    if name == ''
-        return
-    endif
-    normal! gv
-
-    " Replace selected text with the variable name
-    exec "normal c" . name
-    " Define the variable on the line above
-    exec "normal! O" . name . " = "
-    " Paste the original selected text to be the variable value
-    normal! $p
 endfunction
