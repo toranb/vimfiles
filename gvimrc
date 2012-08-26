@@ -58,7 +58,7 @@ if has("autocmd")
   au BufNewFile,BufRead *.{md,markdown,html,xml} sy match Comment /\%^---\_.\{-}---$/
 endif
 
-" etags support
+" ctags support
 set tags=~/.ctags
 
 " provide some context when editing
@@ -73,7 +73,7 @@ map Q gq
 " basic list of shortcuts for the power user in all of us
 let mapleader=","
 map <leader>a :Ack!<space>
-map <leader>d :NERDTreeToggle<cr>
+map <leader>n :NERDTreeToggle<cr>
 map <leader>s :QTPY session<cr>
 map <leader>tf :w<cr> :QTPY file verbose<cr>
 map <leader>tc :w<cr> :QTPY class verbose<cr>
@@ -81,6 +81,9 @@ map <leader>tm :w<cr> :QTPY method verbose<cr>
 map <leader>j :RopeGotoDefinition<cr>
 map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
 map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
+map <leader>d :FufFileWithCurrentBufferDir<CR>
+map <leader>b :FufBuffer<CR>
+map <leader>c :FufTag<CR>
 map .. :w<cr>
 nnoremap <leader><leader> <c-^>
 
@@ -93,8 +96,8 @@ map <leader>im :RopeAutoImport<cr>
 map <leader>fu :RopeFindOccurrences<cr>
 map <leader>rf :call RenameFile()<cr>
 
-" re-index the etags file
-map <leader>ri :silent! !etags -Rf ~/.ctags<cr><C-z><cr>
+" re-index the ctags file
+map <leader>ri :silent! !ctags -Rf ~/.ctags --extra=+f<cr><C-z><cr>
 
 " find merge conflict markers
 nmap <silent> <leader>cf <ESC>/\v^[<=>]{7}( .*\|$)<CR>
