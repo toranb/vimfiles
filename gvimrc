@@ -59,7 +59,7 @@ if has("autocmd")
 endif
 
 " ctags support
-set tags=~/.ctags
+set tags=./.ctags,.ctags;
 
 " provide some context when editing
 set scrolloff=3
@@ -97,7 +97,7 @@ map <leader>fu :RopeFindOccurrences<cr>
 map <leader>rf :call RenameFile()<cr>
 
 " re-index the ctags file
-map <leader>ri :silent! !ctags -Rf ~/.ctags --extra=+f<cr><C-z><cr>
+map <leader>ri :silent! !ctags -Rf .ctags --extra=+f<cr><C-z><cr>
 
 " find merge conflict markers
 nmap <silent> <leader>cf <ESC>/\v^[<=>]{7}( .*\|$)<CR>
