@@ -75,9 +75,9 @@ let mapleader=","
 map <leader>a :Ack!<space>
 map <leader>d :NERDTreeToggle<cr>
 map <leader>s :QTPY session<cr>
-map <leader>tf :QTPY file verbose<cr>
-map <leader>tc :QTPY class verbose<cr>
-map <leader>tm :QTPY method verbose<cr>
+map <leader>tf :w<cr> :QTPY file verbose<cr>
+map <leader>tc :w<cr> :QTPY class verbose<cr>
+map <leader>tm :w<cr> :QTPY method verbose<cr>
 map <leader>j :RopeGotoDefinition<cr>
 map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
 map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
@@ -86,6 +86,7 @@ nnoremap <leader><leader> <c-^>
 
 " basic refactoring support
 map <leader>rv :call RenameVariable()<cr>
+map <leader>rn :RopeRename<cr>
 map <leader>ev :RopeExtractVariable<cr>
 map <leader>em :RopeExtractMethod<cr>
 map <leader>im :RopeAutoImport<cr>
