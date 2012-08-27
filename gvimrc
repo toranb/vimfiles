@@ -72,20 +72,21 @@ map Q gq
 
 " basic list of shortcuts for the power user in all of us
 let mapleader=","
+map .. :w<cr>
 map <leader>a :Ack!<space>
 map <leader>n :NERDTreeToggle<cr>
-map <leader>s :QTPY session<cr>
+map <leader>ts :QTPY session<cr>
 map <leader>tf :w<cr> :QTPY file verbose<cr>
 map <leader>tc :w<cr> :QTPY class verbose<cr>
 map <leader>tm :w<cr> :QTPY method verbose<cr>
 map <leader>j :RopeGotoDefinition<cr>
-map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
-map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
-map <leader>d :FufFileWithCurrentBufferDir<CR>
-map <leader>b :FufBuffer<CR>
-map <leader>c :FufTag<CR>
-map .. :w<cr>
+map <leader>fd :FufFileWithCurrentBufferDir<CR>
+map <leader>fb :FufBuffer<CR>
+map <leader>ft :FufTag<CR>
+map <leader>wn :new %:p:h<CR>
 nnoremap <leader><leader> <c-^>
+map <leader>fi :CommandTFlush<cr>\|:CommandT<cr>
+map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
 
 " basic refactoring support
 map <leader>rv :call RenameVariable()<cr>
