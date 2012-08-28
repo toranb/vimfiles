@@ -74,7 +74,7 @@ map Q gq
 let mapleader=","
 map .. :w<cr>
 map <leader>a :Ack!<space>
-map <leader>n :NERDTreeToggle<cr>
+map <leader>d :NERDTreeToggle<cr>
 map <leader>ts :QTPY session<cr>
 map <leader>tf :w<cr> :QTPY file verbose<cr>
 map <leader>tc :w<cr> :QTPY class verbose<cr>
@@ -82,10 +82,10 @@ map <leader>tm :w<cr> :QTPY method verbose<cr>
 map <leader>j :RopeGotoDefinition<cr>
 map <leader>fd :FufFileWithCurrentBufferDir<CR>
 map <leader>fb :FufBuffer<CR>
-map <leader>ft :FufTag<CR>
+map <leader>fs :FufTag<CR>
 map <leader>wn :new %:p:h<CR>
 nnoremap <leader><leader> <c-^>
-map <leader>fi :CommandTFlush<cr>\|:CommandT<cr>
+map <leader>ff :CommandTFlush<cr>\|:CommandT<cr>
 map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
 
 " basic refactoring support
