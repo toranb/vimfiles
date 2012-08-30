@@ -98,7 +98,7 @@ map <leader>fu :RopeFindOccurrences<cr>
 map <leader>rf :call RenameFile()<cr>
 
 " re-index the ctags file
-map <leader>ri :silent! !ctags -Rf .ctags --extra=+f --exclude=.git --languages=-javascript<cr><C-z><cr>
+map <leader>ri :call RenewTagsFile()<cr>
 
 " find merge conflict markers
 nmap <silent> <leader>cf <ESC>/\v^[<=>]{7}( .*\|$)<CR>
@@ -200,4 +200,9 @@ function! RenameFile()
         exec ':silent !rm ' . old_name
         redraw!
     endif
+endfunction
+
+function! RenewTagsFile()
+    exe 'silent !ctags -Rf .ctags --extra=+f --exclude=.git --languages=-javascript 2>/dev/null'
+    exe 'redraw!'
 endfunction
