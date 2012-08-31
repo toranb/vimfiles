@@ -85,6 +85,7 @@ map <leader>fb :FufBuffer<CR>
 map <leader>fs :FufTag<CR>
 map <leader>wn :new %:p:h<CR>
 nnoremap <leader><leader> <c-^>
+map <leader>lj :LustyJuggler<cr>
 map <leader>ff :CommandTFlush<cr>\|:CommandT<cr>
 map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
 
@@ -146,6 +147,9 @@ set wildignore=*.swp,*.bak,*.pyc,*.class
 let ropevim_vim_completion = 1
 let ropevim_extended_complete = 1
 let g:ropevim_autoimport_modules = ["os.*","traceback","django.*","xml.etree"]
+
+" Better buffer management with the arrow keys (prefer ctl+tab in the future)
+let g:LustyJugglerAltTabMode = 1
 
 " Make pasting done without any indentation break
 set pastetoggle=<F3>
