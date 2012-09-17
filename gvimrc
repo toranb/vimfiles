@@ -32,9 +32,9 @@ set listchars=""                  " Reset the listchars
 set listchars=tab:\ \             " a tab should display as "  ", trailing whitespace as "."
 set listchars+=trail:.            " show trailing spaces as dots
 set listchars+=extends:>          " The character to show in the last column when wrap is
-                                  " off and the line continues beyond the right of the screen
+" off and the line continues beyond the right of the screen
 set listchars+=precedes:<         " The character to show in the first column when wrap is
-                                  " off and the line continues beyond the left of the screen
+" off and the line continues beyond the left of the screen
 "" Searching
 set hlsearch                      " highlight matches
 set incsearch                     " incremental searching
@@ -42,20 +42,20 @@ set ignorecase                    " searches are case insensitive...
 set smartcase                     " ... unless they contain at least one capital letter
 
 if has("autocmd")
-  " Python auto complete
-  autocmd FileType python set omnifunc=pythoncomplete#Complete
+    " Python auto complete
+    autocmd FileType python set omnifunc=pythoncomplete#Complete
 
-  " JavaScript auto complete
-  autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+    " JavaScript auto complete
+    autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 
-  " Treat JSON files like JavaScript
-  au BufNewFile,BufRead *.json set ft=javascript
+    " Treat JSON files like JavaScript
+    au BufNewFile,BufRead *.json set ft=javascript
 
-  " make Python follow PEP8
-  au FileType python set softtabstop=4 tabstop=4 shiftwidth=4
+    " make Python follow PEP8
+    au FileType python set softtabstop=4 tabstop=4 shiftwidth=4
 
-  " mark Jekyll YAML frontmatter as comment
-  au BufNewFile,BufRead *.{md,markdown,html,xml} sy match Comment /\%^---\_.\{-}---$/
+    " mark Jekyll YAML frontmatter as comment
+    au BufNewFile,BufRead *.{md,markdown,html,xml} sy match Comment /\%^---\_.\{-}---$/
 endif
 
 " ctags support
@@ -72,20 +72,30 @@ map Q gq
 
 " basic list of shortcuts for the power user in all of us
 let mapleader=","
+" shortcut to save the current document
 map .. :w<cr>
+" like grep on steroids
 map <leader>a :Ack!<space>
+" basic file system navigation view
 map <leader>d :NERDTreeToggle<cr>
+" python unit testing shortcuts to show the session + test by file/class/method
 map <leader>ts :QTPY session<cr>
 map <leader>tf :w<cr> :QTPY file verbose<cr>
 map <leader>tc :w<cr> :QTPY class verbose<cr>
 map <leader>tm :w<cr> :QTPY method verbose<cr>
+" quick go to definition lookups using ropevim
 map <leader>j :RopeGotoDefinition<cr>
+" search all files by name found in the buffer directory
 map <leader>fd :FufFileWithCurrentBufferDir<CR>
+" search all the files you have open in the vim session
 map <leader>fb :FufBuffer<CR>
+" search the ctags index file for anything by class name/method name
 map <leader>fs :FufTag<CR>
+" opens a new window from the buffer directory
 map <leader>wn :new %:p:h<CR>
+" go to the last file you had open
 nnoremap <leader><leader> <c-^>
-map <leader>lj :LustyJuggler<cr>
+" quick find by file name navigation from the project root
 map <leader>ff :CommandTFlush<cr>\|:CommandT<cr>
 map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
 
@@ -99,7 +109,7 @@ map <leader>fu :RopeFindOccurrences<cr>
 map <leader>rf :call RenameFile()<cr>
 
 " re-index the ctags file
-map <leader>ri :call RenewTagsFile()<cr>
+nnoremap <leader>ri :call RenewTagsFile()<cr>
 
 " find merge conflict markers
 nmap <silent> <leader>cf <ESC>/\v^[<=>]{7}( .*\|$)<CR>
@@ -112,27 +122,24 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-set backupdir=~/.vim/_backup    " where to put backup files.
-set directory=~/.vim/_temp      " where to put swap files.
-
 " decided not to use the default recovery
 set nobackup
 set noswapfile
 
 if has("statusline") && !&cp
-  set laststatus=2  " always show the status bar
+    set laststatus=2  " always show the status bar
 
-  " Start the status line
-  set statusline=%f\ %m\ %r
+    " Start the status line
+    set statusline=%f\ %m\ %r
 
-  " Add fugitive
-  set statusline+=%{fugitive#statusline()}
+    " Add fugitive
+    set statusline+=%{fugitive#statusline()}
 
-  " Finish the statusline
-  set statusline+=Line:%l/%L[%p%%]
-  set statusline+=Col:%v
-  set statusline+=Buf:#%n
-  set statusline+=[%b][0x%B]
+    " Finish the statusline
+    set statusline+=Line:%l/%L[%p%%]
+    set statusline+=Col:%v
+    set statusline+=Buf:#%n
+    set statusline+=[%b][0x%B]
 endif
 
 " fuzzy finder height settings
@@ -148,14 +155,8 @@ let ropevim_vim_completion = 1
 let ropevim_extended_complete = 1
 let g:ropevim_autoimport_modules = ["os.*","traceback","django.*","xml.etree"]
 
-" Better buffer management with the arrow keys (prefer ctl+tab in the future)
-let g:LustyJugglerAltTabMode = 1
-
 " Make pasting done without any indentation break
 set pastetoggle=<F3>
-
-" ,v Select just pasted text.
-nnoremap <leader>v V`]
 
 " ,ed Shortcut to edit .vimrc file on the fly on a vertical window
 nnoremap <leader>ed <C-w><C-v><C-l>:e $MYVIMRC<cr>
@@ -167,24 +168,24 @@ inoremap jj <ESC>
 augroup line_return
     au!
     au BufReadPost *
-        \ if line("'\"") > 0 && line("'\"") <= line("$") |
-        \ execute 'normal! g`"zvzz' |
-        \ endif
+                \ if line("'\"") > 0 && line("'\"") <= line("$") |
+                \ execute 'normal! g`"zvzz' |
+                \ endif
 augroup END
 
 " A few basic refactor methods below
 function! GetSelectedText(...) 
-  try
-    let a_save = @a
-    if a:0 >= 1 && a:1 == 1
-      normal! gv"ad
-    else
-      normal! gv"ay
-    endif
-    return @a
-  finally
-    let @a = a_save
-  endtry
+    try
+        let a_save = @a
+        if a:0 >= 1 && a:1 == 1
+            normal! gv"ad
+        else
+            normal! gv"ay
+        endif
+        return @a
+    finally
+        let @a = a_save
+    endtry
 endfunction
 
 function! RenameVariable()
@@ -207,6 +208,8 @@ function! RenameFile()
 endfunction
 
 function! RenewTagsFile()
-    exe 'silent !ctags -Rf .ctags --extra=+f --exclude=.git --languages=-javascript 2>/dev/null'
+    exe 'silent !rm -rf .ctags'
+    exe 'silent !ctags -Rf .ctags ' . system('python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()"')''
+    exe 'silent !ctags -a -Rf .ctags --extra=+f --exclude=.git --languages=-javascript 2>/dev/null'
     exe 'redraw!'
 endfunction
