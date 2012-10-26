@@ -21,8 +21,8 @@ set hidden
 
 "" Whitespace
 set nowrap                        " don't wrap lines
-set tabstop=2                     " a tab is two spaces
-set shiftwidth=2                  " an autoindent (with <<) is two spaces
+set tabstop=4                     " a tab is four spaces
+set shiftwidth=4                  " an autoindent (with <<) is four spaces
 set expandtab                     " use spaces, not tabs
 set list                          " Show invisible characters
 set backspace=indent,eol,start    " backspace through everything in insert mode
@@ -50,6 +50,9 @@ if has("autocmd")
 
     " Treat JSON files like JavaScript
     au BufNewFile,BufRead *.json set ft=javascript
+
+    " Treat Coffee files like Python
+    au BufNewFile,BufRead *.coffee set ft=python
 
     " make Python follow PEP8
     au FileType python set softtabstop=4 tabstop=4 shiftwidth=4
