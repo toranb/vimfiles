@@ -51,9 +51,6 @@ if has("autocmd")
     " Treat JSON files like JavaScript
     au BufNewFile,BufRead *.json set ft=javascript
 
-    " Treat Coffee files like Python
-    au BufNewFile,BufRead *.coffee set ft=python
-
     " make Python follow PEP8
     au FileType python set softtabstop=4 tabstop=4 shiftwidth=4
 
