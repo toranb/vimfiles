@@ -7,7 +7,7 @@ filetype plugin indent on
 runtime macros/matchit.vim
 
 set background=dark
-color torte
+color evening
 set lazyredraw
 set nonumber
 set ruler       " show the cursor position all the time
@@ -144,12 +144,12 @@ if has("statusline") && !&cp
 endif
 
 " fuzzy finder height settings
-let g:CommandTMaxHeight=12
+let g:CommandTMaxHeight=20
 let g:CommandTMinHeight=4
 
 " fuzzy finder and nerd tree should ignore pyc files
 let NERDTreeIgnore = ['\.pyc$']
-set wildignore=*.swp,*.bak,*.pyc,*.class
+set wildignore=*.swp,*.bak,*.pyc,*.class,node_modules/**
 
 " Rope AutoComplete
 let ropevim_vim_completion = 1
@@ -211,6 +211,6 @@ endfunction
 function! RenewTagsFile()
     exe 'silent !rm -rf .ctags'
     exe 'silent !ctags -Rf .ctags ' . system('python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()"')''
-    exe 'silent !ctags -a -Rf .ctags --extra=+f --exclude=.git --languages=-javascript 2>/dev/null'
+    exe 'silent !ctags -a -Rf .ctags --extra=+f --exclude=.git 2>/dev/null'
     exe 'redraw!'
 endfunction
