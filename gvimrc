@@ -1,13 +1,14 @@
 set nocompatible
 syntax enable
 set encoding=utf-8
-
+set t_Co=256
 call pathogen#infect()
 filetype plugin indent on
 runtime macros/matchit.vim
 
 set background=dark
 color evening
+colorscheme molokai
 set lazyredraw
 set nonumber
 set ruler       " show the cursor position all the time
@@ -77,7 +78,7 @@ map .. :w<cr>
 " like grep on steroids
 map <leader>a :Ack!<space>
 " basic file system navigation view
-map <leader>d :NERDTreeToggle<cr>
+map <leader>d :NERDTreeFind<cr>
 nmap <leader>nt :NERDTreeFind<CR>
 " python unit testing shortcuts to show the session + test by file/class/method
 map <leader>ts :QTPY session<cr>
@@ -108,12 +109,10 @@ map <leader>em :RopeExtractMethod<cr>
 map <leader>im :RopeAutoImport<cr>
 map <leader>fu :RopeFindOccurrences<cr>
 map <leader>rf :call RenameFile()<cr>
+map <leader>cf :call CopyFile()<cr>
 
 " re-index the ctags file
 nnoremap <leader>ri :call RenewTagsFile()<cr>
-
-" find merge conflict markers
-nmap <silent> <leader>cf <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 
 command! KillWhitespace :normal :%s/ *$//g<cr><c-o><cr>
 
@@ -194,6 +193,15 @@ function! RenameVariable()
     let old_name = GetSelectedText()
     if new_name != '' && new_name != old_name
         exec ':%s /' . old_name . '/' . new_name . '/gc'
+        redraw!
+    endif
+endfunction
+
+function! CopyFile()
+    let old_name = expand('%')
+    let new_name = input('New file name: ', expand('%'), 'file')
+    if new_name != '' && new_name != old_name
+        exec ':saveas ' . new_name
         redraw!
     endif
 endfunction
