@@ -78,7 +78,7 @@ map .. :w<cr>
 " like grep on steroids
 map <leader>a :Ack!<space>
 " basic file system navigation view
-map <leader>d :NERDTreeFind<cr>
+map <leader>d :NERDTreeToggle<cr>
 nmap <leader>nt :NERDTreeFind<CR>
 " python unit testing shortcuts to show the session + test by file/class/method
 map <leader>ts :QTPY session<cr>
@@ -219,6 +219,6 @@ endfunction
 function! RenewTagsFile()
     exe 'silent !rm -rf .ctags'
     exe 'silent !ctags -Rf .ctags ' . system('python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()"')''
-    exe 'silent !ctags -a -Rf .ctags --extra=+f --exclude=.git 2>/dev/null'
+    exe 'silent !ctags -a -Rf .ctags --extra=+f --exclude=.git --languages=-javascript 2>/dev/null'
     exe 'redraw!'
 endfunction
