@@ -42,6 +42,10 @@ set incsearch                     " incremental searching
 set ignorecase                    " searches are case insensitive...
 set smartcase                     " ... unless they contain at least one capital letter
 
+" Global settings for powerline
+let g:Powerline_symbols = 'compatible'
+set fillchars+=stl:\ ,stlnc:\
+
 if has("autocmd")
     " Python auto complete
     autocmd FileType python set omnifunc=pythoncomplete#Complete

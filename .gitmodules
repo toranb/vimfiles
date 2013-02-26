@@ -64,3 +64,6 @@
 [submodule "bundle/handlebars"]
 	path = bundle/handlebars
 	url = git://github.com/nono/vim-handlebars.git
+[submodule "bundle/vim-powerline"]
+	path = bundle/vim-powerline
+	url = https://github.com/Lokaltog/vim-powerline.git
