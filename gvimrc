@@ -94,7 +94,7 @@ map <leader>j :RopeGotoDefinition<cr>
 " search all files by name found in the buffer directory
 map <leader>fd :FufFileWithCurrentBufferDir<CR>
 " search all the files you have open in the vim session
-map <leader>fb :FufBuffer<CR>
+map <leader>fb :CtrlPBuffer<CR>
 " search the ctags index file for anything by class name/method name
 map <leader>fs :FufTag<CR>
 " opens a new window from the buffer directory
@@ -102,7 +102,7 @@ map <leader>wn :new %:p:h<CR>
 " go to the last file you had open
 nnoremap <leader><leader> <c-^>
 " quick find by file name navigation from the project root
-map <leader>ff :CommandTFlush<cr>\|:CommandT<cr>
+map <leader>ff :CtrlP .<cr>
 map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
 
 " basic refactoring support

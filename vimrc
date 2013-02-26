@@ -102,7 +102,7 @@ map <leader>wn :new %:p:h<CR>
 " go to the last file you had open
 nnoremap <leader><leader> <c-^>
 " quick find by file name navigation from the project root
-map <leader>ff :CtrlP<cr>
+map <leader>ff :CtrlP .<cr>
 map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
 
 " basic refactoring support
