@@ -2,6 +2,7 @@ set nocompatible
 syntax enable
 set encoding=utf-8
 set t_Co=256
+
 call pathogen#infect()
 filetype plugin indent on
 runtime macros/matchit.vim
@@ -20,7 +21,7 @@ set history=200 " remember more Ex commands
 set completeopt=menu
 set hidden
 
-"" Whitespace
+" Whitespace
 set nowrap                        " don't wrap lines
 set tabstop=4                     " a tab is four spaces
 set shiftwidth=4                  " an autoindent (with <<) is four spaces
@@ -36,7 +37,8 @@ set listchars+=extends:>          " The character to show in the last column whe
 " off and the line continues beyond the right of the screen
 set listchars+=precedes:<         " The character to show in the first column when wrap is
 " off and the line continues beyond the left of the screen
-"" Searching
+
+" Searching
 set hlsearch                      " highlight matches
 set incsearch                     " incremental searching
 set ignorecase                    " searches are case insensitive...
@@ -46,6 +48,13 @@ set smartcase                     " ... unless they contain at least one capital
 let g:Powerline_symbols = 'compatible'
 set fillchars+=stl:\ ,stlnc:\
 
+" Global settings for Ctrl-P (fuzzy finder)
+let g:ctrlp_map = '<Leader>ff'
+let g:ctrlp_custom_ignore = 'node_modules$\|.DS_Store|.git|.bak|.swp|.pyc'
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_dotfiles = 0
+let g:ctrlp_switch_buffer = 0
+
 if has("autocmd")
     " Python auto complete
     autocmd FileType python set omnifunc=pythoncomplete#Complete
@@ -53,14 +62,14 @@ if has("autocmd")
     " JavaScript auto complete
     autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 
-    " Treat JSON files like JavaScript
-    au BufNewFile,BufRead *.json set ft=javascript
+    " make JavaScript code formatting rules match python
+    au FileType javascript set softtabstop=4 tabstop=4 shiftwidth=4
 
     " make Python follow PEP8
     au FileType python set softtabstop=4 tabstop=4 shiftwidth=4
 
-    " mark Jekyll YAML frontmatter as comment
-    au BufNewFile,BufRead *.{md,markdown,html,xml} sy match Comment /\%^---\_.\{-}---$/
+    " Treat JSON files like JavaScript
+    au BufNewFile,BufRead *.json set ft=javascript
 endif
 
 " ctags support
@@ -77,33 +86,40 @@ map Q gq
 
 " basic list of shortcuts for the power user in all of us
 let mapleader=","
+
 " shortcut to save the current document
 map .. :w<cr>
+
 " like grep on steroids
 map <leader>a :Ack!<space>
+
 " basic file system navigation view
 map <leader>d :NERDTreeToggle<cr>
 nmap <leader>nt :NERDTreeFind<CR>
+
 " python unit testing shortcuts to show the session + test by file/class/method
 map <leader>ts :QTPY session<cr>
 map <leader>tf :w<cr> :QTPY file verbose<cr>
 map <leader>tc :w<cr> :QTPY class verbose<cr>
 map <leader>tm :w<cr> :QTPY method verbose<cr>
+
 " quick go to definition lookups using ropevim
 map <leader>j :RopeGotoDefinition<cr>
-" search all files by name found in the buffer directory
-map <leader>fd :FufFileWithCurrentBufferDir<CR>
-" search all the files you have open in the vim session
-map <leader>fb :CtrlPBuffer<CR>
+
 " search the ctags index file for anything by class name/method name
 map <leader>fs :FufTag<CR>
+
+" search all files by name found in the buffer directory
+map <leader>fd :CtrlPCurFile<CR>
+
+" search all the files you have open in the vim session
+map <leader>fb :CtrlPBuffer<CR>
+
 " opens a new window from the buffer directory
 map <leader>wn :new %:p:h<CR>
+
 " go to the last file you had open
 nnoremap <leader><leader> <c-^>
-" quick find by file name navigation from the project root
-map <leader>ff :CtrlP .<cr>
-map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
 
 " basic refactoring support
 map <leader>rv :call RenameVariable()<cr>
