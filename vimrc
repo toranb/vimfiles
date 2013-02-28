@@ -12,16 +12,15 @@ color evening
 colorscheme molokai
 set lazyredraw
 set nonumber
-set ruler       " show the cursor position all the time
+set ruler                         " show the cursor position all the time
 set cursorline
-set showcmd     " display incomplete commands
-set shell=bash  " avoids munging PATH under zsh
-let g:is_bash=1 " default shell syntax
-set history=200 " remember more Ex commands
+set showcmd                       " display incomplete commands
+set shell=bash                    " avoids munging PATH under zsh
+let g:is_bash=1                   " default shell syntax
+set history=200                   " remember more Ex commands
 set completeopt=menu
 set hidden
 
-" Whitespace
 set nowrap                        " don't wrap lines
 set tabstop=4                     " a tab is four spaces
 set shiftwidth=4                  " an autoindent (with <<) is four spaces
@@ -29,16 +28,12 @@ set expandtab                     " use spaces, not tabs
 set list                          " Show invisible characters
 set backspace=indent,eol,start    " backspace through everything in insert mode
 
-" List chars
 set listchars=""                  " Reset the listchars
 set listchars=tab:\ \             " a tab should display as "  ", trailing whitespace as "."
 set listchars+=trail:.            " show trailing spaces as dots
-set listchars+=extends:>          " The character to show in the last column when wrap is
-" off and the line continues beyond the right of the screen
-set listchars+=precedes:<         " The character to show in the first column when wrap is
-" off and the line continues beyond the left of the screen
+set listchars+=extends:>          " The character to show in the last column when line continues to the right
+set listchars+=precedes:<         " The character to show in the first column when line continues to the left
 
-" Searching
 set hlsearch                      " highlight matches
 set incsearch                     " incremental searching
 set ignorecase                    " searches are case insensitive...
@@ -54,6 +49,7 @@ let g:ctrlp_custom_ignore = 'node_modules$\|.DS_Store|.git|.bak|.swp|.pyc'
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_dotfiles = 0
 let g:ctrlp_switch_buffer = 0
+let g:ctrlp_max_height = 18
 
 if has("autocmd")
     " Python auto complete
@@ -65,7 +61,7 @@ if has("autocmd")
     " make JavaScript code formatting rules match python
     au FileType javascript set softtabstop=4 tabstop=4 shiftwidth=4
 
-    " make Python follow PEP8
+    " make Python follow PEP8 (mostly)
     au FileType python set softtabstop=4 tabstop=4 shiftwidth=4
 
     " Treat JSON files like JavaScript
@@ -106,13 +102,13 @@ map <leader>tm :w<cr> :QTPY method verbose<cr>
 " quick go to definition lookups using ropevim
 map <leader>j :RopeGotoDefinition<cr>
 
-" search the ctags index file for anything by class name/method name
-map <leader>fs :FufTag<CR>
+" search the ctags index file for anything by class or method name
+map <leader>fs :CtrlPTag<CR>
 
-" search all files by name found in the buffer directory
+" search all files in the current files directory
 map <leader>fd :CtrlPCurFile<CR>
 
-" search all the files you have open in the vim session
+" search all the files you have open in your vim buffer
 map <leader>fb :CtrlPBuffer<CR>
 
 " opens a new window from the buffer directory
@@ -161,10 +157,6 @@ if has("statusline") && !&cp
     set statusline+=Buf:#%n
     set statusline+=[%b][0x%B]
 endif
-
-" fuzzy finder height settings
-let g:CommandTMaxHeight=20
-let g:CommandTMinHeight=4
 
 " fuzzy finder and nerd tree should ignore pyc files
 let NERDTreeIgnore = ['\.pyc$']
@@ -238,7 +230,7 @@ endfunction
 
 function! RenewTagsFile()
     exe 'silent !rm -rf .ctags'
-    exe 'silent !ctags -Rf .ctags ' . system('python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()"')''
-    exe 'silent !ctags -a -Rf .ctags --extra=+f --exclude=.git --languages=-javascript 2>/dev/null'
+    exe 'silent !ctags -Rf .ctags --languages=python ' . system('python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()"')''
+    exe 'silent !ctags -a -Rf .ctags --extra=+f --exclude=.git --languages=python 2>/dev/null'
     exe 'redraw!'
 endfunction
