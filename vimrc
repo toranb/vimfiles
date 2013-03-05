@@ -61,6 +61,9 @@ if has("autocmd")
     " make JavaScript code formatting rules match python
     au FileType javascript set softtabstop=4 tabstop=4 shiftwidth=4
 
+    " make CoffeeScript code formatting rules match python
+    au FileType coffee set softtabstop=2 tabstop=2 shiftwidth=2
+
     " make Python follow PEP8 (mostly)
     au FileType python set softtabstop=4 tabstop=4 shiftwidth=4
 
