@@ -179,6 +179,12 @@ nnoremap <leader>ed <C-w><C-v><C-l>:e $MYVIMRC<cr>
 " jj For Qicker Escaping between normal and editing mode
 inoremap jj <ESC>
 
+au FocusLost * :silent! wall
+set autowriteall
+
+"Strip trailing whitespace
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
 " Make Sure that Vim returns to the same line when we reopen a file"
 augroup line_return
     au!
