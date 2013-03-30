@@ -1,14 +1,17 @@
 This vim configuration uses pathogen and git submodules
 
 First you need to clone this repository into .vim
+
     git clone https://github.com/toranb/vimfiles ~/.vim
 
 If you have ruby installed you can run rake to update/symlink
+
     cd ~/.vim && rake
 
 If you prefer to do it manually ...
+
     cd ~/.vim
     git submodule update --init
     cd ../
-    ln -s .vimrc ~/.vim/vimrc
-    ln -s .gvimrc ~/.vim/gvimrc
+    ln -s ~/.vim/vimrc .vimrc
+    ln -s ~/.vim/gvimrc .gvimrc
