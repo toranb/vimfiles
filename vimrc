@@ -86,6 +86,10 @@ map Q gq
 " basic list of shortcuts for the power user in all of us
 let mapleader=","
 
+" map buffer rotation to shortcut (next and previous)
+map <c-s-i> :bn<cr>
+map <c-s-o> :bp<cr>
+
 " shortcut to save the current document
 map .. :w<cr>
 
