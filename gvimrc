@@ -43,6 +43,9 @@ set smartcase                     " ... unless they contain at least one capital
 let g:Powerline_symbols = 'compatible'
 set fillchars+=stl:\ ,stlnc:\
 
+" Global setting for easy motion
+let g:EasyMotion_leader_key = '<Leader>l'
+
 " Global settings for Ctrl-P (fuzzy finder)
 let g:ctrlp_map = '<Leader>ff'
 let g:ctrlp_custom_ignore = 'node_modules$\|.DS_Store|.git|.bak|.swp|.pyc'
