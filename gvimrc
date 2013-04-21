@@ -89,10 +89,6 @@ map Q gq
 " basic list of shortcuts for the power user in all of us
 let mapleader=","
 
-" map buffer rotation to shortcut (next and previous)
-map <c-s-i> :bn<cr>
-map <c-s-o> :bp<cr>
-
 " shortcut to save the current document
 map .. :w<cr>
 
@@ -125,7 +121,7 @@ map <leader>fb :CtrlPBuffer<CR>
 map <leader>wn :new %:p:h<CR>
 
 " go to the last file you had open
-nnoremap <leader><leader> <c-^>
+nmap <leader><leader> :bprev<cr>
 
 " basic refactoring support
 map <leader>rv :call RenameVariable()<cr>
