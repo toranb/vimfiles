@@ -121,7 +121,7 @@ map <leader>fb :CtrlPBuffer<CR>
 map <leader>wn :new %:p:h<CR>
 
 " go to the last file you had open
-nmap <leader><leader> :bprev<cr>
+nmap <leader><leader> :call PreviousTab()<cr>
 
 " basic refactoring support
 map <leader>rv :call RenameVariable()<cr>
@@ -198,7 +198,7 @@ augroup line_return
 augroup END
 
 " A few basic refactor methods below
-function! GetSelectedText(...) 
+function! GetSelectedText(...)
     try
         let a_save = @a
         if a:0 >= 1 && a:1 == 1
@@ -245,4 +245,15 @@ function! RenewTagsFile()
     exe 'silent !ctags -Rf .ctags --languages=python ' . system('python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()"')''
     exe 'silent !ctags -a -Rf .ctags --extra=+f --exclude=.git --languages=python 2>/dev/null'
     exe 'redraw!'
+endfunction
+
+let g:prev_tab = 0
+function! PreviousTab()
+    if g:prev_tab != 1
+        exec ':bprev'
+        let g:prev_tab = 1
+    else
+        exec ':bnext'
+        let g:prev_tab = 0
+    endif
 endfunction
