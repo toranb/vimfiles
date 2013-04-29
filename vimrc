@@ -74,6 +74,9 @@ if has("autocmd")
     au BufNewFile,BufRead *.json set ft=javascript
 endif
 
+" Easymotion remap leader
+let g:EasyMotion_leader_key = '<Leader>l'
+
 " ctags support
 set tags=./.ctags,.ctags;
 
