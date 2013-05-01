@@ -9,7 +9,7 @@ runtime macros/matchit.vim
 
 set background=dark
 color evening
-colorscheme molokai
+colorscheme railscasts
 set lazyredraw
 set nonumber
 set ruler                         " show the cursor position all the time

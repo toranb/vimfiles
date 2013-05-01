@@ -67,3 +67,6 @@
 [submodule "bundle/easymotion"]
 	path = bundle/easymotion
 	url = https://github.com/Lokaltog/vim-easymotion.git
+[submodule "bundle/railscaststheme"]
+	path = bundle/railscaststheme
+	url = https://github.com/jpo/vim-railscasts-theme.git
