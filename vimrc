@@ -48,7 +48,7 @@ let g:EasyMotion_leader_key = '<Leader>l'
 
 " Global settings for Ctrl-P (fuzzy finder)
 let g:ctrlp_map = '<Leader>ff'
-let g:ctrlp_custom_ignore = 'node_modules$\|.DS_Store|.git|.bak|.swp|.pyc'
+let g:ctrlp_custom_ignore = 'node_modules$\|xmlrunner$\|.DS_Store|.git|.bak|.swp|.pyc'
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_dotfiles = 0
 let g:ctrlp_switch_buffer = 0
@@ -252,8 +252,7 @@ function! JumpToDefinition()
     let filetype=&ft
     if filetype == 'python'
         exe ':RopeGotoDefinition'
-    endif
-    if filetype == 'coffee'
+    else
         :exe "norm \<C-]>"
     endif
 endfunction
