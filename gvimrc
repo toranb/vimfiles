@@ -92,6 +92,9 @@ let mapleader=","
 " shortcut to save the current document
 map .. :w<cr>
 
+" go to definition
+map <leader>j :call JumpToDefinition()<cr>
+
 " like grep on steroids
 map <leader>a :Ack!<space>
 
@@ -104,9 +107,6 @@ map <leader>ts :QTPY session<cr>
 map <leader>tf :w<cr> :QTPY file verbose<cr>
 map <leader>tc :w<cr> :QTPY class verbose<cr>
 map <leader>tm :w<cr> :QTPY method verbose<cr>
-
-" quick go to definition lookups using ropevim
-map <leader>j :RopeGotoDefinition<cr>
 
 " search the ctags index file for anything by class or method name
 map <leader>fs :CtrlPTag<CR>
@@ -242,7 +242,18 @@ endfunction
 
 function! RenewTagsFile()
     exe 'silent !rm -rf .ctags'
-    exe 'silent !ctags -Rf .ctags --languages=python ' . system('python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()"')''
+    exe 'silent !coffeetags --include-vars -Rf .ctags'
+    exe 'silent !ctags -a -Rf .ctags --languages=python ' . system('python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()"')''
     exe 'silent !ctags -a -Rf .ctags --extra=+f --exclude=.git --languages=python 2>/dev/null'
     exe 'redraw!'
+endfunction
+
+function! JumpToDefinition()
+    let filetype=&ft
+    if filetype == 'python'
+        exe ':RopeGotoDefinition'
+    endif
+    if filetype == 'coffee'
+        :exe "norm \<C-]>"
+    endif
 endfunction
