@@ -39,6 +39,10 @@ set incsearch                     " incremental searching
 set ignorecase                    " searches are case insensitive...
 set smartcase                     " ... unless they contain at least one capital letter
 
+" Show relative line numbers in cmd mode
+autocmd InsertEnter * :set number
+autocmd InsertLeave * :set relativenumber
+
 " Global settings for powerline
 let g:Powerline_symbols = 'compatible'
 set fillchars+=stl:\ ,stlnc:\
@@ -243,8 +247,8 @@ endfunction
 function! RenewTagsFile()
     exe 'silent !rm -rf .ctags'
     exe 'silent !coffeetags --include-vars -Rf .ctags'
-    exe 'silent !ctags -a -Rf .ctags --languages=python ' . system('python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()"')''
-    exe 'silent !ctags -a -Rf .ctags --extra=+f --exclude=.git --languages=python 2>/dev/null'
+    exe 'silent !ctags -a -Rf .ctags --languages=python --python-kinds=-iv --exclude=build --exclude=dist ' . system('python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()"')''
+    exe 'silent !ctags -a -Rf .ctags --extra=+f --exclude=.git --languages=python --python-kinds=-iv --exclude=build --exclude=dist 2>/dev/null'
     exe 'redraw!'
 endfunction
 
