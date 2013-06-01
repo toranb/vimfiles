@@ -99,6 +99,9 @@ map .. :w<cr>
 " go to definition
 map <leader>j :call JumpToDefinition()<cr>
 
+" spell check
+noremap <leader>sp :set spell spelllang=en_us<cr>
+
 " like grep on steroids
 map <leader>a :Ack!<space>
 
