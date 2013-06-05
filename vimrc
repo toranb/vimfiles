@@ -188,7 +188,8 @@ nnoremap <leader>ed <C-w><C-v><C-l>:e $MYVIMRC<cr>
 
 " jj For Qicker Escaping between normal and editing mode
 inoremap jj <ESC>
-
+set esckeys
+set timeoutlen=1000 ttimeoutlen=0
 au FocusLost * :silent! wall
 set autowriteall
 
