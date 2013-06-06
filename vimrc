@@ -90,6 +90,61 @@ map Q gq
 " clear the search buffer when hitting return
 :nnoremap <CR> :nohlsearch<cr>
 
+"==============================================================================
+" Jarrod's settings
+"==============================================================================
+" --- Open Vim with delimitMate off as default
+let g:delimitMate_offByDefault=1
+"
+"==============================================================================
+" Jarrod's functions
+"==============================================================================
+function! EnableJarrodMode()
+    exe ':DelimitMateSwitch'
+    exe ':NeoComplCacheEnable'
+endfunction
+
+function! DisableJarrodMode()
+    exe ':DelimitMateSwitch'
+    exe ':NeoComplCacheDisable'
+endfunction
+"==============================================================================
+" Jarrod's Key mappings
+"==============================================================================
+" --- Change mapleader to 9 as I find that easier to type
+let mapleader="9"
+" --- jk mapped to <Esc>
+imap jk <Esc>
+" --- ss will toggle spell checking
+map ss :setlocal spell!<CR>
+" --- Toggle NERDTree
+nnoremap <leader>d :NERDTreeToggle<CR>
+" --- Toggle Tagbar
+nnoremap <leader>tb :TagbarToggle<CR>
+" --- Open a list of buffers and change to the number selected
+nnoremap <leader>t :buffers<CR>:buffer<Space>
+" --- Open minibuffer explorer
+nnoremap <leader>b :BufExplorer<CR>
+" --- Split the window vertically
+nnoremap <leader>sv :vsplit<CR>
+" --- Split the window horizontally
+nnoremap <leader>sh :split<CR>
+" --- Ack short cut
+nnoremap <leader>a :Ack!
+" --- Toggle Syntastic
+nnoremap <leader>ts :SyntasticToggleMode<CR>
+" --- Enable / Toggle DelimitMate
+nnoremap <leader>ds :DelimitMateSwitch<CR>
+" --- Toggle NeoComplCache On (Enable) off by default at startup
+nnoremap <leader>ne :NeoComplCacheEnable<CR>
+" --- Toggle NeoComplCache Off (Disable)
+nnoremap <leader>nd :NeoComplCacheDisable<CR>
+" --- Enable Jarrod Mode
+map <leader>ej :call EnableJarrodMode()<cr>
+" --- Disable Jarrod Mode so people don't have to live in my world
+map <leader>dj :call DisableJarrodMode()<cr>
+"------------------------------------------------------------------------------
+
 " basic list of shortcuts for the power user in all of us
 let mapleader=","
 
@@ -150,61 +205,6 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
-
-"==============================================================================
-" Jarrod's settings
-"==============================================================================
-" --- Open Vim with delimitMate off as default
-let g:delimitMate_offByDefault=1
-"
-"==============================================================================
-" Jarrod's functions
-"==============================================================================
-function! EnableJarrodMode()
-    exe ':DelimitMateSwitch'
-    exe ':NeoComplCacheEnable'
-endfunction
-
-function! DisableJarrodMode()
-    exe ':DelimitMateSwitch'
-    exe ':NeoComplCacheDisable'
-endfunction
-"==============================================================================
-" Jarrod's Key mappings
-"==============================================================================
-" --- Change mapleader to 9 as I find that easier to type
-let mapleader="9"
-" --- jk mapped to <Esc>
-imap jk <Esc>
-" --- ss will toggle spell checking
-map ss :setlocal spell!<CR>
-" --- Toggle NERDTree 
-nnoremap <leader>d :NERDTreeToggle<CR>
-" --- Toggle Tagbar 
-nnoremap <leader>tb :TagbarToggle<CR>
-" --- Open a list of buffers and change to the number selected
-nnoremap <leader>t :buffers<CR>:buffer<Space>
-" --- Open minibuffer explorer
-nnoremap <leader>b :BufExplorer<CR>
-" --- Split the window vertically
-nnoremap <leader>sv :vsplit<CR>
-" --- Split the window horizontally
-nnoremap <leader>sh :split<CR>
-" --- Ack short cut
-nnoremap <leader>a :Ack!
-" --- Toggle Syntastic
-nnoremap <leader>ts :SyntasticToggleMode<CR>
-" --- Enable / Toggle DelimitMate
-nnoremap <leader>ds :DelimitMateSwitch<CR>
-" --- Toggle NeoComplCache On (Enable) off by default at startup
-nnoremap <leader>ne :NeoComplCacheEnable<CR>
-" --- Toggle NeoComplCache Off (Disable)
-nnoremap <leader>nd :NeoComplCacheDisable<CR>
-" --- Enable Jarrod Mode
-map <leader>ej :call EnableJarrodMode()<cr>
-" --- Disable Jarrod Mode so people don't have to live in my world
-map <leader>dj :call DisableJarrodMode()<cr>
-"------------------------------------------------------------------------------
 
 " decided not to use the default recovery
 set nobackup
