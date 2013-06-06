@@ -73,3 +73,12 @@
 [submodule "bundle/seek"]
 	path = bundle/seek
 	url = https://github.com/goldfeld/vim-seek.git
+[submodule "bundle/neocomplcache"]
+	path = bundle/neocomplcache
+	url = https://github.com/Shougo/neocomplcache.vim
+[submodule "bundle/delimimate"]
+	path = bundle/delimimate
+	url = https://github.com/Raimondi/delimitMate
+[submodule "bundle/tagbar"]
+	path = bundle/tagbar
+	url = https://github.com/majutsushi/tagbar
