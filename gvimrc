@@ -123,8 +123,10 @@ nnoremap <leader>d :NERDTreeToggle<CR>
 nnoremap <leader>tb :TagbarToggle<CR>
 " --- Open a list of buffers and change to the number selected
 nnoremap <leader>t :buffers<CR>:buffer<Space>
-" --- Open minibuffer explorer
-nnoremap <leader>b :BufExplorer<CR>
+" --- open CtrlP buffer explorer
+nnoremap <leader>b :CtrlPBuffer<CR>
+" --- open CtrlP as a fuzzy finder
+nnoremap <leader>ff :CtrlP<CR>
 " --- Split the window vertically
 nnoremap <leader>sv :vsplit<CR>
 " --- Split the window horizontally
