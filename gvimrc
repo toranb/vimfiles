@@ -117,9 +117,9 @@ let mapleader="9"
 imap jk <Esc>
 " --- ss will toggle spell checking
 map ss :setlocal spell!<CR>
-" --- Toggle NERDTree 
+" --- Toggle NERDTree
 nnoremap <leader>d :NERDTreeToggle<CR>
-" --- Toggle Tagbar 
+" --- Toggle Tagbar
 nnoremap <leader>tb :TagbarToggle<CR>
 " --- Open a list of buffers and change to the number selected
 nnoremap <leader>t :buffers<CR>:buffer<Space>
@@ -155,6 +155,9 @@ map .. :w<cr>
 
 " go to definition
 map <leader>j :call JumpToDefinition()<cr>
+
+" spell check
+noremap <leader>sp :set spell spelllang=en_us<cr>
 
 " like grep on steroids
 map <leader>a :Ack!<space>
@@ -240,8 +243,9 @@ set pastetoggle=<F3>
 " ,ed Shortcut to edit .vimrc file on the fly on a vertical window
 nnoremap <leader>ed <C-w><C-v><C-l>:e $MYVIMRC<cr>
 
-" jj For Qicker Escaping between normal and editing mode
+" jj and jk For Qicker Escaping between normal and editing mode
 inoremap jj <ESC>
+inoremap jk <ESC>
 set esckeys
 set timeoutlen=1000 ttimeoutlen=0
 au FocusLost * :silent! wall

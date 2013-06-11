@@ -243,7 +243,7 @@ set pastetoggle=<F3>
 " ,ed Shortcut to edit .vimrc file on the fly on a vertical window
 nnoremap <leader>ed <C-w><C-v><C-l>:e $MYVIMRC<cr>
 
-" jj For Qicker Escaping between normal and editing mode
+" jj and jk For Qicker Escaping between normal and editing mode
 inoremap jj <ESC>
 inoremap jk <ESC>
 set esckeys
