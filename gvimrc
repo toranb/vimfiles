@@ -187,6 +187,9 @@ map <leader>wn :new %:p:h<CR>
 " go to the last file you had open
 nmap <leader><leader> <c-^>
 
+" Karma test runner shortcut
+map <leader>q :!karma start<CR>
+
 " basic refactoring support
 map <leader>rv :call RenameVariable()<cr>
 map <leader>rn :RopeRename<cr>
